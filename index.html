@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyLearn - Learn Python Fundamentals</title>
+    <style>
+        :root {
+            --primary: #2e502c;
+            --secondary: #74b348;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #36502c;
+            --highlight: #f1c40f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--highlight);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--highlight);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: white;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--highlight);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .lessons {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .lessons .section-title h2 {
+            color: white;
+        }
+        
+        .lesson-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn.active {
+            border-bottom: 3px solid var(--highlight);
+            color: var(--highlight);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            color: var(--highlight);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            color: var(--dark);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .tab-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .tab-content h4 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .tab-content ul, .tab-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tab-content pre {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .tab-content code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8f9fa;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .evaluation {
+            text-align: center;
+        }
+        
+        .evaluation iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--highlight);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--highlight);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--highlight);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 99;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">PyLearn</div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#lessons">Lessons</a></li>
+                    <li><a href="#evaluation">Evaluate</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>UNLOCK POSSIBILITIES</h1>
+                <p>Learn Python programming fundamentals with our comprehensive course designed for beginners. Build critical thinking and problem-solving skills that will prepare you for college and beyond.</p>
+                <a href="#lessons" class="btn">Start Learning</a>
+                <a href="#benefits" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+    
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Benefits for College Readiness</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Strong Foundation</h3>
+                    <p>Builds critical thinking and problem-solving skills essential for academic success in any field.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Course Flexibility</h3>
+                    <p>Prepares students for courses in Computer Science, IT, Engineering, Data Science, and interdisciplinary fields.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Portfolio Development</h3>
+                    <p>Students can create simple projects to showcase in college applications and demonstrate their skills.</p>
+                </div>
+            </div>
+            
+            <div class="stats" style="margin-top: 4rem; text-align: center;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--accent);">College Readiness of Filipino K-12 Graduates</h3>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                    <div style="background-color: var(--secondary); color: white; padding: 2rem; border-radius: 10px; min-width: 200px;">
+                        <h4 style="font-size: 3rem; margin-bottom: 0.5rem;">62.7%</h4>
+                        <p>In 2020, 6/10 students reported feeling unprepared for college challenges</p>
+                    </div>
+                    <div style="background-color: var(--primary); color: white; padding: 2rem; border-radius: 10px; min-width: 200px;">
+                        <h4 style="font-size: 3rem; margin-bottom: 0.5rem;">AVERAGE</h4>
+                        <p>In 2023, senior high school students show only average college preparedness</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="lessons" class="lessons">
+        <div class="container">
+            <div class="section-title">
+                <h2>Python Fundamentals</h2>
+            </div>
+            
+            <div class="lesson-tabs">
+                <button class="tab-btn active" data-tab="module1">Module 1: Algorithms</button>
+                <button class="tab-btn" data-tab="module2">Module 2: Python Basics</button>
+                <button class="tab-btn" data-tab="module3">Module 3: Conditionals</button>
+                <button class="tab-btn" data-tab="module4">Module 4: Loops</button>
+                <button class="tab-btn" data-tab="module5">Module 5: Functions</button>
+                <button class="tab-btn" data-tab="module6">Module 6: Lists</button>
+            </div>
+            
+            <div id="module1" class="tab-content active">
+                <h3>Module 1: Algorithms and Flowcharting</h3>
+                
+                <h4>Programming Concepts Defined</h4>
+                <ul>
+                    <li><strong>Computer Program:</strong> List of instructions that directs the computer on its operations (e.g., Calculator, Games, Websites)</li>
+                    <li><strong>Programming:</strong> The act of developing a computer program</li>
+                    <li><strong>Programmer:</strong> The person who develops computer programs</li>
+                </ul>
+                
+                <h4>Steps in Program Planning and Development</h4>
+                <ol>
+                    <li><strong>Problem Analysis:</strong> Define and understand the problem, analyze requirements, constraints, and objectives</li>
+                    <li><strong>Setting Up the Algorithm:</strong> Break down the problem into smaller tasks, decide logical flow</li>
+                    <li><strong>Coding:</strong> Translate algorithm into Python code using proper syntax</li>
+                    <li><strong>Encoding:</strong> Save the code into a .py file</li>
+                    <li><strong>Running, Testing, and Debugging:</strong> Test with different inputs, fix issues</li>
+                    <li><strong>Documentation:</strong> Create explanatory materials and comments</li>
+                </ol>
+                
+                <h4>Example: Sum of 3 Numbers</h4>
+                <pre>
+Problem Analysis:
+Input: 3 numbers (num1, num2, num3)
+Output: Sum of the 3 numbers (sum)
+Process: Sum = num1 + num2 + num3
+
+Algorithm:
+1. Begin
+2. Read num1, num2
+3. Sum = num1 + num2
+4. Read num3
+5. Sum = sum + num3
+6. Print sum
+7. End</pre>
+                
+                <h4>Flowchart Symbols</h4>
+                <ul>
+                    <li><strong>Terminal Symbol:</strong> Start/end of flowchart</li>
+                    <li><strong>Input/Output Symbol:</strong> For input and output operations</li>
+                    <li><strong>Processing Symbol:</strong> For processing and computations</li>
+                    <li><strong>Decision Symbol:</strong> For YES/NO or TRUE/FALSE paths</li>
+                </ul>
+            </div>
+            
+            <div id="module2" class="tab-content">
+                <h3>Module 2: Introduction to Python Programming</h3>
+                
+                <h4>Why Use Python?</h4>
+                <ul>
+                    <li>Easy to learn and use with simple, intuitive syntax</li>
+                    <li>Versatile (web development, data analysis, AI, scientific computing, etc.)</li>
+                    <li>Large community and ecosystem with many libraries</li>
+                    <li>Cross-platform support (Windows, macOS, Linux)</li>
+                    <li>High-level language (more human-readable than low-level languages)</li>
+                    <li>Interpreted language (no need to compile before executing)</li>
+                </ul>
+                
+                <h4>Variables and Data Types</h4>
+                <p><strong>Variables:</strong> Used to store values in memory</p>
+                <pre>name = "python"  # 'name' is variable, 'python' is value</pre>
+                
+                <h4>Naming Variables Rules</h4>
+                <ul>
+                    <li>Can contain letters, digits, and underscore (_)</li>
+                    <li>Must begin with a letter</li>
+                    <li>Case-sensitive (myVar ≠ myvar)</li>
+                    <li>Cannot be Python keywords (if, else, while, etc.)</li>
+                </ul>
+                
+                <h4>Data Types</h4>
+                <ul>
+                    <li><strong>String:</strong> Text in single/double quotes ('hello', "world")</li>
+                    <li><strong>Integer:</strong> Whole numbers (5, -3, 100)</li>
+                    <li><strong>Float:</strong> Numbers with decimals (3.14, -0.5)</li>
+                    <li><strong>Boolean:</strong> True or False values</li>
+                </ul>
+                
+                <h4>Print Function</h4>
+                <pre>print("Hello, World!")  # Basic print
+print("Hello", "World", sep="-")  # With separator
+print("Hello", end=" ")  # Change end character
+print("World")</pre>
+                
+                <h4>Input Function</h4>
+                <pre>name = input("Enter your name: ")
+print("Hello", name)</pre>
+                
+                <h4>Casting</h4>
+                <pre>x = "10"
+y = int(x)  # Convert to integer
+z = float(x)  # Convert to float
+s = str(10)  # Convert to string</pre>
+            </div>
+            
+            <div id="module3" class="tab-content">
+                <h3>Module 3: Decision Making Statements</h3>
+                
+                <h4>Comparison Operators</h4>
+                <ul>
+                    <li><code>==</code> (equal to)</li>
+                    <li><code>!=</code> (not equal to)</li>
+                    <li><code>></code> (greater than)</li>
+                    <li><code><</code> (less than)</li>
+                    <li><code>>=</code> (greater than or equal to)</li>
+                    <li><code><=</code> (less than or equal to)</li>
+                </ul>
+                
+                <h4>Logical Operators</h4>
+                <ul>
+                    <li><code>and</code> (True if both conditions are true)</li>
+                    <li><code>or</code> (True if at least one condition is true)</li>
+                    <li><code>not</code> (Reverses the result)</li>
+                </ul>
+                
+                <h4>If Statement</h4>
+                <pre>number1 = 5
+number2 = 7
+if number1 < number2:
+    print("The first number is smaller")</pre>
+                
+                <h4>If-Else Statement</h4>
+                <pre>num = 3
+if num >= 0:
+    print("Positive or Zero")
+else:
+    print("Negative number")</pre>
+                
+                <h4>If-Elif-Else Statement</h4>
+                <pre>num = 3.4
+if num > 0:
+    print("Positive number")
+elif num == 0:
+    print("Zero")
+else:
+    print("Negative number")</pre>
+                
+                <h4>Nested If-Else</h4>
+                <pre>if num >= 0:
+    if num == 0:
+        print("Zero")
+    else:
+        print("Positive number")
+else:
+    print("Negative number")</pre>
+            </div>
+            
+            <div id="module4" class="tab-content">
+                <h3>Module 4: Iterative Statements (Loops)</h3>
+                
+                <h4>While Loop</h4>
+                <pre>i = 1
+while i < 6:
+    print(i)
+    i += 1</pre>
+                
+                <h4>For Loop</h4>
+                <pre># Iterating through a string
+for x in "banana":
+    print(x)
+
+# Using range
+for x in range(6):  # 0 to 5
+    print(x)
+
+for x in range(2, 6):  # 2 to 5
+    print(x)
+
+for x in range(2, 6, 2):  # 2, 4 (step by 2)
+    print(x)</pre>
+                
+                <h4>Loop Control Statements</h4>
+                <pre># Break statement
+for x in "python":
+    if x == "h":
+        break
+    print(x)  # Output: p, y, t
+
+# Continue statement
+for x in "python":
+    if x == "h":
+        continue
+    print(x)  # Output: p, y, t, o, n</pre>
+                
+                <h4>Else in Loops</h4>
+                <pre>for x in range(2, 6):
+    print(x)
+else:
+    print("Finally finished!")</pre>
+                
+                <h4>Nested Loops</h4>
+                <pre>for i in range(2, 6):
+    print(f"First 10 multiples of: {i}")
+    for j in range(1, 11):
+        print(i * j, end=", ")
+    print("\n")</pre>
+            </div>
+            
+            <div id="module5" class="tab-content">
+                <h3>Module 5: Functions</h3>
+                
+                <h4>Defining a Function</h4>
+                <pre>def greet():
+    print("Hello World")
+
+greet()  # Call the function</pre>
+                
+                <h4>Function with Parameters</h4>
+                <pre>def add(num1, num2):
+    sum = num1 + num2
+    return sum
+
+result = add(1, 2)
+print(result)  # Output: 3</pre>
+                
+                <h4>Default Parameters</h4>
+                <pre>def greet(name="Joy"):
+    print(f"Hi {name}")
+
+greet()  # Output: Hi Joy
+greet("Eyren")  # Output: Hi Eyren</pre>
+                
+                <h4>Built-in Functions</h4>
+                <ul>
+                    <li><code>max()</code> - Gets the maximum value</li>
+                    <li><code>min()</code> - Gets the minimum value</li>
+                    <li><code>sum()</code> - Gets the sum</li>
+                    <li><code>len()</code> - Gets the length</li>
+                </ul>
+            </div>
+            
+            <div id="module6" class="tab-content">
+                <h3>Module 6: Python Lists (Arrays)</h3>
+                
+                <h4>Creating Lists</h4>
+                <pre>food = ['cake', 'burger', 'fries']
+print(food[0])  # Output: cake
+print(food[-1])  # Output: fries (last item)</pre>
+                
+                <h4>Modifying Lists</h4>
+                <pre>food[0] = 'pizza'  # Change first item
+print(food)  # Output: ['pizza', 'burger', 'fries']</pre>
+                
+                <h4>List Methods</h4>
+                <pre># append() - Add item to end
+food.append('ice cream')
+
+# insert() - Add item at specific position
+food.insert(1, 'salad')
+
+# remove() - Remove first occurrence
+food.remove('burger')
+
+# pop() - Remove item at index
+food.pop(0)
+
+# sort() - Sort the list
+food.sort()
+
+# reverse() - Reverse the list
+food.reverse()
+
+# extend() - Add elements from another list
+drinks = ['coke', 'juice']
+food.extend(drinks)</pre>
+            </div>
+        </div>
+    </section>
+    
+    <section id="evaluation" class="evaluation">
+        <div class="container">
+            <div class="section-title">
+                <h2>Evaluation Form</h2>
+            </div>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeIFsVRMYvRU3qEEM-ozEQhPiStexJ3_vqJjxSmZpbFx3oBFw/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+    </section>
+    
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Python for SHS Students?</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Beginner-Friendly</h3>
+                    <p>Python's simple syntax is ideal for students with no programming background, making it easy to learn and understand.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Versatile & In-Demand</h3>
+                    <p>Python is widely used in web development, data science, AI, automation, and more, making it a valuable skill to learn.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-building"></i>
+                    <h3>Global & Local Relevance</h3>
+                    <p>Python ranks among the top programming languages globally and is in high demand in the Philippine tech industry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PyLearn</h3>
+                    <p>Learn Python programming fundamentals with our comprehensive course designed for beginners and SHS students.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#benefits">Benefits</a></li>
+                        <li><a href="#lessons">Lessons</a></li>
+                        <li><a href="#evaluation">Evaluation</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Modules</h3>
+                    <ul>
+                        <li><a href="#module1">Algorithms</a></li>
+                        <li><a href="#module2">Python Basics</a></li>
+                        <li><a href="#module3">Conditionals</a></li>
+                        <li><a href="#module4">Loops</a></li>
+                        <li><a href="#module5">Functions</a></li>
+                        <li><a href="#module6">Lists</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@pylearn.com</li>
+                        <li><i class="fas fa-phone"></i> +63 912 345 6789</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Dasmariñas Cavite, Philippines</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 PyLearn. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+    
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('active');
+            } else {
+                backToTopBtn.classList.remove('active');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
